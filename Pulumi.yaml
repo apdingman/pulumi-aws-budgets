@@ -1,0 +1,23 @@
+name: pulumi-aws-budgets
+runtime: yaml
+description: A simple example of using Pulumi to deploy a budget in an AWS account
+resources:
+  s3:
+    type: aws:budgets:Budget
+    properties:
+      name: s3-budget
+      budgetType: COST
+      costFilters:
+        - name: Service
+          values:
+            - Amazon Simple Storage Service
+      limitAmount: '30'
+      limitUnit: USD
+      notifications:
+        - comparisonOperator: GREATER_THAN
+          notificationType: ACTUAL
+          subscriberEmailAddresses:
+            - adam@adamdingman.net
+          threshold: 100
+          thresholdType: PERCENTAGE
+      timeUnit: MONTHLY
